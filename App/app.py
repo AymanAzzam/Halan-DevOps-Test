@@ -92,8 +92,8 @@ def get_ips():
         return "There is an error in PostrgrsSQL Connection"
 
 if __name__ == '__main__':
-    #if(len(sys.argv) > 5 or len(sys.argv) < 2):
-    #    print("Unvalid Number of argumnts")
-    #    print("the arguments are databse_name, databse_password(optional), databse_host(optional)")
-    #else:
-    app.run(host='0.0.0.0')
+    if(len(sys.argv) > 5 or len(sys.argv) < 2):
+        print("Unvalid Number of argumnts")
+        print("the arguments are databse_name, databse_password(optional), databse_host(optional)")
+    else:
+        app.run(host='0.0.0.0')
