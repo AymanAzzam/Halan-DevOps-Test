@@ -10,15 +10,15 @@ def connect_db():
         # connect to the database
         connection = psycopg2.connect(database="halan")
         # Print PostgreSQL Server Info
-        print("PostgresSQL Server info: ", connection.get_dsn_parameters(),"\n")
+        print("\nPostgresSQL Server info: \n", connection.get_dsn_parameters(),"\n")
         return connection
     except (Exception, Error) as e:
-        print("Error while connecting to PostgresSQL\n", e)
+        print("\nError while connecting to PostgresSQL\n", e)
         return None
 
 def disconnect_db(connection):
     connection.close()
-    print("PostgresSQL connection is closed")
+    print("PostgresSQL connection is closed\n")
 
 def run_insert(connection, query):
     # cursor to perform the database operations
@@ -77,4 +77,4 @@ def get_ips():
         return "There is an error in PostrgrsSQL Connection"
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
