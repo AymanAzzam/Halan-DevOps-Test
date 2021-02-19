@@ -8,6 +8,8 @@ RUN apt-get update -y && apt-get install -y python-pip python-dev libpq-dev
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "python" ]
+EXPOSE 5000
 
-CMD [ "app.py" ]
+ENTRYPOINT ["python"]
+
+CMD ["app.py"]
