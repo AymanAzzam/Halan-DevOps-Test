@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ARG db_name
+ARG db_name="halan"
 ARG db_password
 ARG db_host
 
