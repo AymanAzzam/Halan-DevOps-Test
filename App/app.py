@@ -13,9 +13,10 @@ def connect_db():
         # connect to the database
         connection = None
         if(len(sys.argv) > 2):
-            db_password = sys.argv[2]
-            db_host = sys.argv[3]
-            connection = psycopg2.connect(database=db_name, password=db_password, host=db_host)
+            db_user = sys.argv[2]
+            db_password = sys.argv[3]
+            db_host = sys.argv[4]
+            connection = psycopg2.connect(user=db_user, database=db_name, password=db_password, host=db_host)
         else:
             connection = psycopg2.connect(database=db_name)
         # Print PostgreSQL Server Info
@@ -91,7 +92,7 @@ def get_ips():
         return "There is an error in PostrgrsSQL Connection"
 
 if __name__ == '__main__':
-    if(len(sys.argv) > 4 or len(sys.argv) < 2):
+    if(len(sys.argv) > 5 or len(sys.argv) < 2):
         print("Unvalid Number of argumnts")
         print("the arguments are databse_name, databse_password(optional), databse_host(optional)")
     else:
