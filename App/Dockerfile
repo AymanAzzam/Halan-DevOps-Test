@@ -1,5 +1,9 @@
 FROM ubuntu:16.04
 
+ARG db_name
+ARG db_password
+ARG db_host
+
 WORKDIR /app
 
 COPY . /app
@@ -10,4 +14,4 @@ RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
 
-CMD ["app.py"]
+CMD ["app.py", $db_name, $db_password, $db_host]
