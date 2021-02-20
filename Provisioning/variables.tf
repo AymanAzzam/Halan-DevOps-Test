@@ -1,43 +1,37 @@
+variable "access_key" {
+    default = "add your acces key here"
+    type = string
+    description = "Enter the access key for AWS account"
+}
+
+variable "secret_key" {
+    default = "add your secret key here"
+    type = string
+    description = "Enter the secret key for AWS account"
+}
+
 variable "db_name" {
-    default = "add default value here or delete this line"
+    default = "halan"
     type = string
     description = "Enter the database name"
 }
 
 variable "db_user" {
-    default = "add default value here or delete this line"
+    default = "postgres"
     type = string
     description = "Enter the database username"
 }
 
 variable "db_password" {
-    default = "add default value here or delete this line"
+    default = "1357902468"
     type = string
     description = "Enter the database password"
-}
-
-variable "db_host" {
-    default = "add default value here or delete this line"
-    type = string
-    description = "Enter the database host"
 }
 
 variable "public_port" {
     default = 5000
     type = number
     description = "Enter the output port to be used for API"
-}
-
-variable "access_key" {
-    default = "add default value here or delete this line"
-    type = string
-    description = "Enter the access key for AWS account"
-}
-
-variable "secret_key" {
-    default = "add default value here or delete this line"
-    type = string
-    description = "Enter the secret key for AWS account"
 }
 
 variable "key_name" {

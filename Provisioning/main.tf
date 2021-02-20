@@ -19,11 +19,13 @@ resource "aws_instance" "API" {
     provisioner "file" {
         source      = "scripts/install_postgres.sh"
         destination = "/tmp/install_postgres.sh"
-    }
 
-    provisioner "file" {
-        source      = "scripts/install_docker.sh"
-        destination = "/tmp/install_docker.sh"
+        connection {
+            type = "ssh"
+            host = self.public_ip
+            user = "ubuntu"
+            private_key = file("${path.module}/halan.pem")
+        }
     }
 
     provisioner "remote-exec" {
@@ -38,11 +40,12 @@ resource "aws_instance" "API" {
         inline = [
             "chmod +x /tmp/install_postgres.sh",
             "/tmp/install_postgres.sh",
-            "chmod +x /tmp/install_docker.sh",
-            "/tmp/install_docker.sh",
-            "PGPASSWORD=${var.db_password} psql -h ${aws_db_instance.Postgres-Master.endpoint} -U ${var.db_user} -d ${var.db_name} -c 'CREATE TABLE ips ( ip varchar(80));'",
+            "sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable'",
+            "sudo apt-get update -y",
+            "sudo apt-get install docker.io",
+            "PGPASSWORD=${var.db_password} psql -h ${aws_db_instance.Postgres-Master.address} -U ${var.db_user} -d ${var.db_name} -c 'CREATE TABLE ips ( ip varchar(80));'",
             "docker pull aymanazzam/halantest:halan",
-            "docker run -p ${var.public_port}:5000 aymanazzam/halantest:halan python app.py ${var.db_name} ${var.db_user} ${var.db_password} ${aws_db_instance.Postgres-Master.endpoint} &"
+            "docker run -p ${var.public_port}:5000 aymanazzam/halantest:halan python app.py ${var.db_name} ${var.db_user} ${var.db_password} ${aws_db_instance.Postgres-Master.address}"
         ]
     }
 }
@@ -73,12 +76,28 @@ resource "aws_security_group" "API_sg" {
 
 resource "aws_db_instance" "Postgres-Master" {
     identifier = "postgres-master-${random_string.rand.result}"
-    name = "halan"
     engine = "postgres"
     engine_version = "12.5"
     instance_class = "db.t2.micro"
     allocated_storage = 20
     skip_final_snapshot  = true
+    
+    name = var.db_name
     username = var.db_user
     password = var.db_password
+    backup_retention_period = 1
+}
+
+resource "aws_db_instance" "Postgres-Slave" {
+    identifier = "postgres-slave-${random_string.rand.result}"
+    engine = "postgres"
+    engine_version = "12.5"
+    instance_class = "db.t2.micro"
+    allocated_storage = 20
+    skip_final_snapshot  = true
+    
+    username = ""
+    password = ""
+    replicate_source_db = aws_db_instance.Postgres-Master.id
+    backup_retention_period = 0
 }
