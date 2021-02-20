@@ -10,6 +10,12 @@ variable "secret_key" {
     description = "Enter the secret key for AWS account"
 }
 
+variable "key_name" {
+    default = "halan"
+    type = string
+    description = "Enter the public key name created on AWS"
+}
+
 variable "db_name" {
     default = "halan"
     type = string
@@ -23,7 +29,7 @@ variable "db_user" {
 }
 
 variable "db_password" {
-    default = "1357902468"
+    default = "123456789"
     type = string
     description = "Enter the database password"
 }
@@ -32,10 +38,4 @@ variable "public_port" {
     default = 5000
     type = number
     description = "Enter the output port to be used for API"
-}
-
-variable "key_name" {
-    default = "add default value here or delete this line"
-    type = string
-    description = "Enter the public key name created on AWS"
 }
