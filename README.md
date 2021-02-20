@@ -43,6 +43,6 @@ docker run -p 5000:5000 halan python app.py halan
 ```
 Or
 ```sh
-docker run -p 5000:5000 halan postgres 123456789 test@test.com
+docker run -p 5000:5000 halan python app.py halan postgres 123456789 test@test.com
 ```
 where "halan" is the database name, "postgres" is the database user, "123456789" is the database password and "test@test.com" is the database host
