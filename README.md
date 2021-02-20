@@ -6,10 +6,12 @@ A fully provisioned environment automated using terraform on AWS. The environmen
 2. DB master node (PostgresSQL)
 3. DB slave node replica (PostgresSQL)
 
-### Run the Provisioned environment
+### Run the provisioned environment
 1. Install [terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
-2. Add your aws key, a simple way to do that by editing the variables in **variables.tf** inside the Provisioning folder.
-3. Run the following commands inside Provisioning folder:
+2. Create a new key pair on AWS called **halan**
+3. Replace **halan.pem** with your new private key in the Provisioning folder. 
+4. Add your aws key, a simple way to do that by editing the variables in **variables.tf** inside the Provisioning folder.
+5. Run the following commands inside Provisioning folder:
 ```sh
 terraform init
 terraform apply
@@ -42,7 +44,7 @@ To run the app file from App directory there are two methods
 ```sh
 python app.py halan
 ``` 
-Or
+OR
 ```sh
 python app.py halan postgres 123456789 test@test.com
 ```
@@ -61,7 +63,7 @@ then to run the image use one of the following methods based on your case local/
 ```sh
 docker run -p 5000:5000 halan python app.py halan
 ```
-Or
+OR
 ```sh
 docker run -p 5000:5000 aymanazzam/halantest:halan python app.py halan postgres 123456789 test@test.com
 ```
